@@ -9,7 +9,7 @@ export default function PhoneInput({ field, value, onChange, onBlur, error, acce
     };
 
     return (
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mb-8">
             {/* Label and Hint Group */}
             <div className="mb-2">
                 <div className="flex justify-between items-center">

@@ -63,12 +63,9 @@ export default function FieldList() {
                                 className={cn(
                                     "relative group transition-all rounded-lg p-4 border border-transparent",
                                     isSelected
-                                        ? "bg-white shadow-[0_0_0_2px_rgba(59,130,246,0.5)]"
+                                        ? "bg-card ring-2 ring-primary shadow-sm"
                                         : "hover:bg-accent/50"
                                 )}
-                                style={isSelected ? {
-                                    boxShadow: `0 0 0 2px var(--color-${activeForm.accentColor}, #4f46e5)`
-                                } : {}}
                             >
                                 {/* Field Preview */}
                                 <div className="pointer-events-none">

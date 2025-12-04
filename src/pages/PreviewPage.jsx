@@ -109,12 +109,12 @@ export default function PreviewPage() {
 
         activeForm.fields.forEach((field) => {
             // Check visibility
-            if (field.enableConditionalLogic && !isFieldVisible(field, activeForm.fields, formData)) {
+            if (!isFieldVisible(field, activeForm.fields, formData)) {
                 return; // Skip hidden fields
             }
 
             // Check enablement
-            if (field.enableConditionalLogic && !isFieldEnabled(field, activeForm.fields, formData)) {
+            if (!isFieldEnabled(field, activeForm.fields, formData)) {
                 return; // Skip disabled fields
             }
 
@@ -172,14 +172,12 @@ export default function PreviewPage() {
                                 if (!Component) return null;
 
                                 // Check Visibility
-                                if (field.enableConditionalLogic && !isFieldVisible(field, activeForm.fields, formData)) {
+                                if (!isFieldVisible(field, activeForm.fields, formData)) {
                                     return null;
                                 }
 
                                 // Check Enablement
-                                const isEnabled = field.enableConditionalLogic
-                                    ? isFieldEnabled(field, activeForm.fields, formData)
-                                    : true;
+                                const isEnabled = isFieldEnabled(field, activeForm.fields, formData);
                                 const isLast = index === activeForm.fields.length - 1;
 
                                 return (

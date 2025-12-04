@@ -64,7 +64,7 @@ export default function DropdownInput({ field, value, onChange, onBlur, error, a
     };
 
     return (
-        <div className="flex flex-col mb-4" ref={containerRef}>
+        <div className="flex flex-col mb-8" ref={containerRef}>
             {/* Label and Hint Group */}
             <div className="mb-2">
                 <div className="flex justify-between items-center">

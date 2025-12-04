@@ -5,7 +5,7 @@ export default function ToggleInput({ field, value, onChange, onBlur, error, acc
     const isChecked = !!value;
 
     return (
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mb-8">
             {/* Label and Hint Group */}
             <div className="mb-2">
                 <div className="flex justify-between items-center">
@@ -30,11 +30,9 @@ export default function ToggleInput({ field, value, onChange, onBlur, error, acc
                         {config.toggleStyle === 'inset' ? (
                             // Inset Style (iOS-like): Knob inside the track
                             <div
-                                className={`w-11 h-6 bg-input peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:shadow-sm`}
+                                className={`w-11 h-6 bg-input peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:shadow-sm`}
                                 style={{
                                     backgroundColor: isChecked ? 'var(--color-primary)' : undefined,
-                                    '--tw-ring-color': 'var(--color-primary)',
-                                    '--tw-ring-offset-width': '2px',
                                 }}
                             ></div>
                         ) : (

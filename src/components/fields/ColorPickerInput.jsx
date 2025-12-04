@@ -4,7 +4,7 @@ import { RotateCcw } from 'lucide-react';
 export default function ColorPickerInput({ field, value, onChange, onBlur, error, accentColor, isLast }) {
     const { config, validation } = field;
     return (
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mb-8">
             <div className="mb-2">
                 <div className="flex justify-between items-center">
                     <label htmlFor={field.id} className="block text-sm font-medium">

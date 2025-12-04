@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Plus, Trash2, AlertTriangle, ChevronDown, Check } from 'lucide-react';
 import RuleBuilder from './RuleBuilder';
 import EditorDropdown from './EditorDropdown';
+import BuilderDatePicker from './BuilderDatePicker';
 
 export default function FieldConfigEditor({ field, updateField }) {
     const { type, config, validation } = field;
@@ -87,17 +88,19 @@ export default function FieldConfigEditor({ field, updateField }) {
                         </div>
                     )}
 
-                    {/* Required Field */}
-                    <div className="flex items-center gap-2 pt-1">
-                        <input
-                            type="checkbox"
-                            id={`required-${field.id}`}
-                            checked={validation.required || false}
-                            onChange={(e) => handleValidationChange('required', e.target.checked)}
-                            className="h-4 w-4 rounded border-input text-primary focus:ring-primary"
-                        />
-                        <label htmlFor={`required-${field.id}`} className="text-sm font-medium cursor-pointer select-none">Required Field</label>
-                    </div>
+                    {/* Required Field (Not applicable for Toggle as it always has a value) */}
+                    {type !== 'toggle' && (
+                        <div className="flex items-center gap-2 pt-1">
+                            <input
+                                type="checkbox"
+                                id={`required-${field.id}`}
+                                checked={validation.required || false}
+                                onChange={(e) => handleValidationChange('required', e.target.checked)}
+                                className="h-4 w-4 rounded border-input text-primary focus:ring-primary accent-primary"
+                            />
+                            <label htmlFor={`required-${field.id}`} className="text-sm font-medium cursor-pointer select-none">Required Field</label>
+                        </div>
+                    )}
                 </div>
 
                 {/* Type Specific Settings */}
@@ -235,7 +238,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                                         id={`tooltip-${field.id}`}
                                         checked={config.showTooltip || false}
                                         onChange={(e) => handleConfigChange('showTooltip', e.target.checked)}
-                                        className="h-4 w-4 rounded border-input text-primary focus:ring-primary"
+                                        className="h-4 w-4 rounded border-input text-primary focus:ring-primary accent-primary"
                                     />
                                     <label htmlFor={`tooltip-${field.id}`} className="text-sm font-medium cursor-pointer select-none">Show Thumb Tooltip</label>
                                 </div>
@@ -272,7 +275,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                             </div>
                             {config.starSize === 'custom' && (
                                 <div className="space-y-1.5">
-                                    <label className="text-xs font-medium text-muted-foreground">Custom Size (px)</label>
+                                    <label className="text-xs font-medium text-muted-foreground">Custom Size (50px)</label>
                                     <input
                                         type="number"
                                         min="10"
@@ -327,7 +330,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                                     id={`other-${field.id}`}
                                     checked={config.allowOther || false}
                                     onChange={(e) => handleConfigChange('allowOther', e.target.checked)}
-                                    className="h-4 w-4 rounded border-input text-primary focus:ring-primary"
+                                    className="h-4 w-4 rounded border-input text-primary focus:ring-primary accent-primary"
                                 />
                                 <label htmlFor={`other-${field.id}`} className="text-sm font-medium cursor-pointer select-none">Allow "Other" Option</label>
                             </div>
@@ -341,7 +344,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                                             id={`multi-${field.id}`}
                                             checked={config.multiSelect !== undefined ? config.multiSelect : (type === 'checkboxGroup')}
                                             onChange={(e) => handleConfigChange('multiSelect', e.target.checked)}
-                                            className="h-4 w-4 rounded border-input text-primary focus:ring-primary"
+                                            className="h-4 w-4 rounded border-input text-primary focus:ring-primary accent-primary"
                                         />
                                         <label htmlFor={`multi-${field.id}`} className="text-sm font-medium cursor-pointer select-none">Allow Multiple Selections</label>
                                     </div>
@@ -407,7 +410,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                                             name={`toggleStyle-${field.id}`}
                                             checked={config.toggleStyle !== 'inset'}
                                             onChange={() => handleConfigChange('toggleStyle', 'offset')}
-                                            className="h-4 w-4 border-input text-primary focus:ring-primary"
+                                            className="h-4 w-4 border-input text-primary focus:ring-primary accent-primary"
                                         />
                                         <span className="text-sm">Offset</span>
                                     </label>
@@ -417,7 +420,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                                             name={`toggleStyle-${field.id}`}
                                             checked={config.toggleStyle === 'inset'}
                                             onChange={() => handleConfigChange('toggleStyle', 'inset')}
-                                            className="h-4 w-4 border-input text-primary focus:ring-primary"
+                                            className="h-4 w-4 border-input text-primary focus:ring-primary accent-primary"
                                         />
                                         <span className="text-sm">Inset</span>
                                     </label>
@@ -432,32 +435,30 @@ export default function FieldConfigEditor({ field, updateField }) {
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="space-y-1.5">
                                     <label className="text-xs font-medium text-muted-foreground">Min Date</label>
-                                    <input
-                                        type="date"
-                                        value={validation.minDate || ''}
-                                        onChange={(e) => {
-                                            const newValue = e.target.value;
-                                            if (validation.maxDate && newValue && new Date(newValue) > new Date(validation.maxDate)) {
+                                    <BuilderDatePicker
+                                        value={validation.minDate}
+                                        onChange={(date) => {
+                                            if (validation.maxDate && date && new Date(date) > new Date(validation.maxDate)) {
                                                 alert("Min Date cannot be after Max Date");
                                             }
-                                            handleValidationChange('minDate', newValue);
+                                            handleValidationChange('minDate', date);
                                         }}
-                                        className={`w-full px-3 py-2 border rounded-md bg-background text-sm focus:outline-none focus:border-primary ${isDateRangeInvalid ? 'border-destructive focus:border-destructive text-destructive' : 'border-input'}`}
+                                        maxDate={validation.maxDate}
+                                        placeholder="Pick min date"
                                     />
                                 </div>
                                 <div className="space-y-1.5">
                                     <label className="text-xs font-medium text-muted-foreground">Max Date</label>
-                                    <input
-                                        type="date"
-                                        value={validation.maxDate || ''}
-                                        onChange={(e) => {
-                                            const newValue = e.target.value;
-                                            if (validation.minDate && newValue && new Date(newValue) < new Date(validation.minDate)) {
+                                    <BuilderDatePicker
+                                        value={validation.maxDate}
+                                        onChange={(date) => {
+                                            if (validation.minDate && date && new Date(date) < new Date(validation.minDate)) {
                                                 alert("Max Date cannot be before Min Date");
                                             }
-                                            handleValidationChange('maxDate', newValue);
+                                            handleValidationChange('maxDate', date);
                                         }}
-                                        className={`w-full px-3 py-2 border rounded-md bg-background text-sm focus:outline-none focus:border-primary ${isDateRangeInvalid ? 'border-destructive focus:border-destructive text-destructive' : 'border-input'}`}
+                                        minDate={validation.minDate}
+                                        placeholder="Pick max date"
                                     />
                                 </div>
                             </div>
@@ -485,52 +486,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                     {/* Time */}
                     {type === 'time' && (
                         <div className="space-y-3">
-                            <div className="grid grid-cols-2 gap-3">
-                                <div className="space-y-1.5">
-                                    <label className="text-xs font-medium text-muted-foreground">Min Time</label>
-                                    <input
-                                        type="time"
-                                        value={validation.minTime || ''}
-                                        onChange={(e) => {
-                                            const newValue = e.target.value;
-                                            if (validation.maxTime && newValue) {
-                                                const [minH, minM] = newValue.split(':').map(Number);
-                                                const [maxH, maxM] = validation.maxTime.split(':').map(Number);
-                                                if ((minH * 60 + minM) > (maxH * 60 + maxM)) {
-                                                    alert("Min Time cannot be after Max Time");
-                                                }
-                                            }
-                                            handleValidationChange('minTime', newValue);
-                                        }}
-                                        className={`w-full px-3 py-2 border rounded-md bg-background text-sm focus:outline-none focus:border-primary ${isTimeRangeInvalid ? 'border-destructive focus:border-destructive text-destructive' : 'border-input'}`}
-                                    />
-                                </div>
-                                <div className="space-y-1.5">
-                                    <label className="text-xs font-medium text-muted-foreground">Max Time</label>
-                                    <input
-                                        type="time"
-                                        value={validation.maxTime || ''}
-                                        onChange={(e) => {
-                                            const newValue = e.target.value;
-                                            if (validation.minTime && newValue) {
-                                                const [minH, minM] = validation.minTime.split(':').map(Number);
-                                                const [maxH, maxM] = newValue.split(':').map(Number);
-                                                if ((minH * 60 + minM) > (maxH * 60 + maxM)) {
-                                                    alert("Max Time cannot be before Min Time");
-                                                }
-                                            }
-                                            handleValidationChange('maxTime', newValue);
-                                        }}
-                                        className={`w-full px-3 py-2 border rounded-md bg-background text-sm focus:outline-none focus:border-primary ${isTimeRangeInvalid ? 'border-destructive focus:border-destructive text-destructive' : 'border-input'}`}
-                                    />
-                                </div>
-                            </div>
-                            {isTimeRangeInvalid && (
-                                <div className="flex items-center gap-2 text-xs text-destructive bg-destructive/10 p-2 rounded-md">
-                                    <AlertTriangle size={14} />
-                                    <span>Min Time cannot be after Max Time.</span>
-                                </div>
-                            )}
+
                             <div className="space-y-1.5">
                                 <label className="text-xs font-medium text-muted-foreground">Time Format</label>
                                 <EditorDropdown

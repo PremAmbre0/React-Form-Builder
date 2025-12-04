@@ -10,7 +10,7 @@ export default function TextInput({ field, value, onChange, onBlur, error, accen
     };
 
     return (
-        <div className={`flex flex-col mb-4 ${disabled ? 'opacity-50 pointer-events-none' : ''}`}>
+        <div className={`flex flex-col mb-8 ${disabled ? 'opacity-50 pointer-events-none' : ''}`}>
             {/* Label and Hint Group */}
             <div className="mb-2">
                 <div className="flex justify-between items-center">
