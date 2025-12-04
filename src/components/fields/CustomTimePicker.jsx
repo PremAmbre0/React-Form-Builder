@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
-import { createPortal } from 'react-dom';
 import { getAccentColorHex } from '../../utils/colors';
 
 export default function CustomTimePicker({ value, onChange, onClose, accentColor, format = '12', triggerRef }) {
@@ -8,7 +7,6 @@ export default function CustomTimePicker({ value, onChange, onClose, accentColor
     const [selectedMinute, setSelectedMinute] = useState(0);
     const [selectedPeriod, setSelectedPeriod] = useState('AM');
     const accentHex = getAccentColorHex(accentColor);
-    const [position, setPosition] = useState({ top: 0, left: 0, width: 0 });
 
     const ITEM_HEIGHT = 40;
     const CONTAINER_HEIGHT = 192; // h-48
@@ -30,28 +28,20 @@ export default function CustomTimePicker({ value, onChange, onClose, accentColor
     const loopedMinutes = [...minutes, ...minutes, ...minutes];
 
     // Calculate position with collision detection
+    const [isFlipped, setIsFlipped] = useState(false);
+
     useLayoutEffect(() => {
         if (triggerRef?.current) {
             const rect = triggerRef.current.getBoundingClientRect();
-            const PICKER_HEIGHT = 200; // Estimated height (192px + margin)
+            const PICKER_HEIGHT = 200; // Estimated height
             const spaceBelow = window.innerHeight - rect.bottom;
-
-            let topPosition;
 
             // Check for bottom collision
             if (spaceBelow < PICKER_HEIGHT) {
-                // Position above the field
-                topPosition = rect.top + window.scrollY - PICKER_HEIGHT - 8; // 8px gap
+                setIsFlipped(true);
             } else {
-                // Position below the field
-                topPosition = rect.bottom + window.scrollY;
+                setIsFlipped(false);
             }
-
-            setPosition({
-                top: topPosition,
-                left: rect.left + window.scrollX,
-                width: 256 // w-64
-            });
         }
     }, [triggerRef]);
 
@@ -190,16 +180,12 @@ export default function CustomTimePicker({ value, onChange, onClose, accentColor
         });
     };
 
-    return createPortal(
+    return (
         <div
             onMouseDown={(e) => e.preventDefault()} // Prevent focus loss on input when clicking picker
-            className="fixed z-[9999] mt-2 bg-popover text-popover-foreground rounded-lg shadow-xl border border-border animate-in fade-in zoom-in-95 duration-200 overflow-hidden select-none"
-            style={{
-                '--accent-color': accentHex,
-                top: position.top,
-                left: position.left,
-                width: position.width
-            }}
+            className={`absolute z-[9999] bg-popover text-popover-foreground rounded-lg shadow-xl border border-border w-64 animate-in fade-in zoom-in-95 duration-200 overflow-hidden select-none ${isFlipped ? 'bottom-full mb-2' : 'top-full mt-2'
+                } left-0`}
+            style={{ '--accent-color': accentHex }}
         >
 
             <div className="flex h-48 relative">
@@ -288,7 +274,6 @@ export default function CustomTimePicker({ value, onChange, onClose, accentColor
                     </div>
                 )}
             </div>
-        </div>,
-        document.body
+        </div>
     );
 }
