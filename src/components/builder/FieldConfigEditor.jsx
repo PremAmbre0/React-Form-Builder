@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, AlertTriangle, ChevronDown, Check } from 'lucide-react';
 import RuleBuilder from './RuleBuilder';
-import EditorDropdown from './EditorDropdown';
-import BuilderDatePicker from './BuilderDatePicker';
+import AppDropdown from '../ui/AppDropdown';
+import AppDatePicker from '../ui/AppDatePicker';
 
 export default function FieldConfigEditor({ field, updateField }) {
     const { type, config, validation } = field;
@@ -130,7 +130,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                             </div>
                             <div className="space-y-1.5">
                                 <label className="text-xs font-medium text-muted-foreground">Validation Type</label>
-                                <EditorDropdown
+                                <AppDropdown
                                     value={config.validationType || 'none'}
                                     options={[
                                         { label: 'None (Text)', value: 'none' },
@@ -262,7 +262,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                             </div>
                             <div className="space-y-1.5">
                                 <label className="text-xs font-medium text-muted-foreground">Star Size</label>
-                                <EditorDropdown
+                                <AppDropdown
                                     value={config.starSize || 'medium'}
                                     options={[
                                         { label: 'Small', value: 'small' },
@@ -435,7 +435,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="space-y-1.5">
                                     <label className="text-xs font-medium text-muted-foreground">Min Date</label>
-                                    <BuilderDatePicker
+                                    <AppDatePicker
                                         value={validation.minDate}
                                         onChange={(date) => {
                                             if (validation.maxDate && date && new Date(date) > new Date(validation.maxDate)) {
@@ -449,7 +449,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                                 </div>
                                 <div className="space-y-1.5">
                                     <label className="text-xs font-medium text-muted-foreground">Max Date</label>
-                                    <BuilderDatePicker
+                                    <AppDatePicker
                                         value={validation.maxDate}
                                         onChange={(date) => {
                                             if (validation.minDate && date && new Date(date) < new Date(validation.minDate)) {
@@ -470,7 +470,7 @@ export default function FieldConfigEditor({ field, updateField }) {
                             )}
                             <div className="space-y-1.5">
                                 <label className="text-xs font-medium text-muted-foreground">Date Format</label>
-                                <EditorDropdown
+                                <AppDropdown
                                     value={config.dateFormat || 'YYYY-MM-DD'}
                                     options={[
                                         { label: 'YYYY-MM-DD', value: 'YYYY-MM-DD' },
@@ -489,7 +489,7 @@ export default function FieldConfigEditor({ field, updateField }) {
 
                             <div className="space-y-1.5">
                                 <label className="text-xs font-medium text-muted-foreground">Time Format</label>
-                                <EditorDropdown
+                                <AppDropdown
                                     value={config.timeFormat || '24'}
                                     options={[
                                         { label: '24 Hour (14:30)', value: '24' },
