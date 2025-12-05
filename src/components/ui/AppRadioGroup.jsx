@@ -12,6 +12,7 @@ const AppRadioGroup = ({
     className = '',
     helpText,
     accentColor = 'primary',
+    accentColorHex,
     direction = 'vertical'
 }) => {
     const [otherValue, setOtherValue] = useState('');
@@ -53,7 +54,7 @@ const AppRadioGroup = ({
                 <div className="mb-2">
                     <div className="flex justify-between items-center">
                         {label && (
-                            <label className="block text-sm font-medium">
+                            <label className="block text-sm font-medium break-words">
                                 {label} {required && <span className="text-destructive">*</span>}
                             </label>
                         )}
@@ -71,15 +72,15 @@ const AppRadioGroup = ({
                                 checked={value === option.value}
                                 onChange={() => handleRadioChange(option.value)}
                                 disabled={disabled}
-                                className={`peer h-4 w-4 appearance-none rounded-full border border-input ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 checked:border-${accentColor}`}
+                                className={`peer h-4 w-4 appearance-none rounded-full border border-input ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${!accentColorHex ? `checked:border-${accentColor}` : ''}`}
                                 style={{
-                                    borderColor: value === option.value ? `var(--color-${accentColor})` : undefined
+                                    borderColor: value === option.value ? (accentColorHex || `var(--color-${accentColor})`) : undefined
                                 }}
                             />
                             <div
-                                className={`absolute h-2 w-2 rounded-full hidden peer-checked:block bg-${accentColor}`}
+                                className={`absolute h-2 w-2 rounded-full hidden peer-checked:block ${!accentColorHex ? `bg-${accentColor}` : ''}`}
                                 style={{
-                                    backgroundColor: value === option.value ? `var(--color-${accentColor})` : undefined
+                                    backgroundColor: value === option.value ? (accentColorHex || `var(--color-${accentColor})`) : undefined
                                 }}
                             />
                         </div>
@@ -98,15 +99,15 @@ const AppRadioGroup = ({
                                     checked={isOtherSelected}
                                     onChange={handleOtherRadioChange}
                                     disabled={disabled}
-                                    className={`peer h-4 w-4 appearance-none rounded-full border border-input ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 checked:border-${accentColor}`}
+                                    className={`peer h-4 w-4 appearance-none rounded-full border border-input ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${!accentColorHex ? `checked:border-${accentColor}` : ''}`}
                                     style={{
-                                        borderColor: isOtherSelected ? `var(--color-${accentColor})` : undefined
+                                        borderColor: isOtherSelected ? (accentColorHex || `var(--color-${accentColor})`) : undefined
                                     }}
                                 />
                                 <div
-                                    className={`absolute h-2 w-2 rounded-full hidden peer-checked:block bg-${accentColor}`}
+                                    className={`absolute h-2 w-2 rounded-full hidden peer-checked:block ${!accentColorHex ? `bg-${accentColor}` : ''}`}
                                     style={{
-                                        backgroundColor: isOtherSelected ? `var(--color-${accentColor})` : undefined
+                                        backgroundColor: isOtherSelected ? (accentColorHex || `var(--color-${accentColor})`) : undefined
                                     }}
                                 />
                             </div>

@@ -66,9 +66,11 @@ const useFormStore = create(
             },
 
             sidebarMode: null, // 'picker', 'settings', or null
+            insertionIndex: null, // Index to insert new field at
 
             openSidebar: (mode = 'picker') => set({ sidebarMode: mode }),
-            closeSidebar: () => set({ sidebarMode: null, selectedFieldId: null }),
+            closeSidebar: () => set({ sidebarMode: null, selectedFieldId: null, insertionIndex: null }),
+            setInsertionIndex: (index) => set({ insertionIndex: index }),
 
             addField: (fieldType) => {
                 set((state) => {
@@ -82,13 +84,19 @@ const useFormStore = create(
                         validation: { ...definition.validation }
                     };
 
+                    const currentFields = [...state.activeForm.fields];
+                    const insertAt = state.insertionIndex !== null ? state.insertionIndex : currentFields.length;
+
+                    currentFields.splice(insertAt, 0, newField);
+
                     return {
                         activeForm: {
                             ...state.activeForm,
-                            fields: [...state.activeForm.fields, newField],
+                            fields: currentFields,
                         },
                         selectedFieldId: null, // Deselect to close settings if open, or keep closed
                         sidebarMode: null, // Close sidebar after adding
+                        insertionIndex: null, // Reset after adding
                     };
                 });
                 get().saveForm();
@@ -139,7 +147,7 @@ const useFormStore = create(
                 get().saveForm();
             },
 
-            selectField: (fieldId) => set({ selectedFieldId: fieldId, sidebarMode: 'settings' }),
+            selectField: (fieldId) => set({ selectedFieldId: fieldId }),
 
             moveField: (activeId, overId) => {
                 set((state) => {
@@ -152,6 +160,20 @@ const useFormStore = create(
 
                     const [movedField] = fields.splice(oldIndex, 1);
                     fields.splice(newIndex, 0, movedField);
+
+                    return {
+                        activeForm: { ...state.activeForm, fields },
+                    };
+                });
+                get().saveForm();
+            },
+
+            reorderFields: (startIndex, endIndex) => {
+                set((state) => {
+                    if (!state.activeForm) return state;
+                    const fields = [...state.activeForm.fields];
+                    const [removed] = fields.splice(startIndex, 1);
+                    fields.splice(endIndex, 0, removed);
 
                     return {
                         activeForm: { ...state.activeForm, fields },

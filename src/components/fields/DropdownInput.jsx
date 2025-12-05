@@ -68,7 +68,7 @@ export default function DropdownInput({ field, value, onChange, onBlur, error, a
             {/* Label and Hint Group */}
             <div className="mb-2">
                 <div className="flex justify-between items-center">
-                    <label htmlFor={field.id} className="block text-sm font-medium">
+                    <label htmlFor={field.id} className="block text-sm font-medium break-words">
                         {config.label} {validation.required && <span className="text-destructive">*</span>}
                     </label>
                 </div>

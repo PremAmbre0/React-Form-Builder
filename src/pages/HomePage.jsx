@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFormStore from '../store/useFormStore';
-import { Plus, FileText, Trash2, Search, X } from 'lucide-react';
+import { Plus, FileText, Trash2, Search, X, Filter, ChevronDown } from 'lucide-react';
 import AppDropdown from '../components/ui/AppDropdown';
 
 export default function HomePage() {
@@ -46,49 +46,61 @@ export default function HomePage() {
     return (
         <div className="space-y-8">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight">My Forms</h2>
-                    <p className="text-muted-foreground mt-1">Manage and create your forms.</p>
+                {/* Search */}
+                <div className="relative w-full md:w-64">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                    <input
+                        type="text"
+                        placeholder="Search forms..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className={`w-full pl-9 pr-8 py-2 h-10 rounded-md border bg-background text-sm focus:outline-none transition-colors ${searchQuery ? 'border-primary' : 'border-input focus:border-primary'}`}
+                    />
+                    {searchQuery && (
+                        <button
+                            onClick={() => setSearchQuery('')}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1 rounded-full hover:bg-muted transition-colors"
+                        >
+                            <X size={14} />
+                        </button>
+                    )}
                 </div>
 
-                <div className="flex items-center gap-3 w-full md:w-auto">
-                    {/* Search */}
-                    <div className="relative flex-1 md:w-64">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                        <input
-                            type="text"
-                            placeholder="Search forms..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className={`w-full pl-9 pr-8 py-2 h-10 rounded-md border bg-background text-sm focus:outline-none transition-colors ${searchQuery ? 'border-primary' : 'border-input focus:border-primary'}`}
-                        />
-                        {searchQuery && (
-                            <button
-                                onClick={() => setSearchQuery('')}
-                                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1 rounded-full hover:bg-muted transition-colors"
-                            >
-                                <X size={14} />
-                            </button>
-                        )}
-                    </div>
-
+                <div className="flex flex-row w-full md:w-auto gap-3">
                     {/* Sort Dropdown */}
-                    <div className="w-40">
+                    <div className="w-auto md:w-40 shrink-0">
                         <AppDropdown
                             value={sortBy}
                             options={sortOptions}
                             onChange={setSortBy}
+                            trigger={
+                                <>
+                                    {/* Mobile Trigger (Icon Only) */}
+                                    <button className="md:hidden w-10 h-10 flex items-center justify-center border border-input rounded-md bg-background text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors">
+                                        <Filter size={20} />
+                                    </button>
+
+                                    {/* Desktop Trigger (Standard) */}
+                                    <button
+                                        type="button"
+                                        className="hidden md:flex w-full px-3 py-2 border border-input rounded-md bg-background text-sm items-center justify-between focus:outline-none focus:border-primary transition-colors hover:bg-accent/50"
+                                    >
+                                        <span className="truncate">{sortOptions.find(o => o.value === sortBy)?.label || 'Select...'}</span>
+                                        <ChevronDown size={16} className="text-muted-foreground" />
+                                    </button>
+                                </>
+                            }
                         />
                     </div>
 
                     {/* Create Button */}
                     <button
                         onClick={handleCreateNew}
-                        className="bg-primary text-primary-foreground px-4 py-2 h-10 rounded-md flex items-center gap-2 hover:bg-primary/90 transition-colors whitespace-nowrap"
+                        className="bg-primary text-primary-foreground px-4 py-2 h-10 rounded-md flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors whitespace-nowrap flex-1 md:w-auto"
                     >
                         <Plus size={20} />
-                        <span className="hidden sm:inline">Create New</span>
-                        <span className="sm:hidden">New</span>
+                        <span className="hidden md:inline">Create New</span>
+                        <span className="md:hidden">Create Form</span>
                     </button>
                 </div>
             </div>

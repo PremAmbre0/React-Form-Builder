@@ -12,7 +12,8 @@ const AppToggle = ({
     disabled = false,
     className = '',
     helpText,
-    accentColor = 'primary'
+    accentColor = 'primary',
+    accentColorHex
 }) => {
     return (
         <div className={`flex flex-col ${className} ${disabled ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -21,7 +22,7 @@ const AppToggle = ({
                 <div className="mb-2">
                     <div className="flex justify-between items-center">
                         {label && (
-                            <label className="block text-sm font-medium">
+                            <label className="block text-sm font-medium break-words">
                                 {label} {required && <span className="text-destructive">*</span>}
                             </label>
                         )}
@@ -37,18 +38,22 @@ const AppToggle = ({
                     aria-checked={value}
                     onClick={() => !disabled && onChange(!value)}
                     disabled={disabled}
-                    className={`
-                        relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50
-                        ${value ? `bg-${accentColor}` : 'bg-input'}
-                    `}
-                    style={{
-                        backgroundColor: value ? `var(--color-${accentColor})` : undefined
-                    }}
+                    className="relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     <span
                         className={`
-                            pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform
-                            ${value ? 'translate-x-5' : 'translate-x-0'}
+                            absolute left-0 top-1/2 -translate-y-1/2 w-full rounded-full transition-colors
+                            ${toggleStyle === 'offset' ? 'h-3.5' : 'h-full'}
+                            ${value ? (!accentColorHex ? `bg-${accentColor}` : '') : 'bg-input'}
+                        `}
+                        style={{
+                            backgroundColor: value ? (accentColorHex || `var(--color-${accentColor})`) : undefined
+                        }}
+                    />
+                    <span
+                        className={`
+                            pointer-events-none block h-5 w-5 rounded-full bg-background shadow-md ring-0 transition-transform
+                            ${value ? 'translate-x-6' : 'translate-x-0'}
                             ${toggleStyle === 'inset' ? 'scale-75' : ''}
                         `}
                     />

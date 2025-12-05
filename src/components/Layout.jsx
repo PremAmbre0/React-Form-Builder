@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../utils/cn';
 
 export default function Layout({ children }) {
+    const location = useLocation();
+    const isBuilder = location.pathname.startsWith('/builder');
+
     const [theme, setTheme] = useState(() => {
         if (typeof window !== 'undefined') {
             const savedTheme = localStorage.getItem('theme');
@@ -31,8 +34,11 @@ export default function Layout({ children }) {
     };
 
     return (
-        <div className="min-h-screen bg-background text-foreground font-sans antialiased transition-colors duration-300">
-            <header className="border-b border-border sticky top-0 z-50 bg-background/80 backdrop-blur-sm">
+        <div className={cn(
+            "bg-background text-foreground font-sans antialiased transition-colors duration-300 flex flex-col",
+            isBuilder ? "h-screen overflow-hidden" : "min-h-screen"
+        )}>
+            <header className="border-b border-border sticky top-0 z-50 bg-background/80 backdrop-blur-sm shrink-0">
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                     <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -49,7 +55,10 @@ export default function Layout({ children }) {
                     </button>
                 </div>
             </header>
-            <main className="container mx-auto px-4 py-8">
+            <main className={cn(
+                "flex-1",
+                isBuilder ? "flex flex-col min-h-0 overflow-hidden" : "container mx-auto px-4 py-4 md:px-4 md:py-8"
+            )}>
                 {children}
             </main>
         </div>

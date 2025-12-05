@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ACCENT_COLORS } from '../../constants/colors';
 
 const AppSlider = ({
     label,
@@ -13,13 +14,20 @@ const AppSlider = ({
     disabled = false,
     className = '',
     helpText,
-    accentColor = 'primary'
+    accentColor = 'primary',
+    accentColorHex
 }) => {
     const [isDragging, setIsDragging] = useState(false);
 
     const handleSliderChange = (e) => {
         onChange(parseFloat(e.target.value));
     };
+
+    const safeValue = value !== undefined && value !== null ? value : min;
+    const percentage = ((safeValue - min) / (max - min)) * 100;
+    // Fallback to Indigo if no color provided or found
+    const defaultColor = ACCENT_COLORS[0].value;
+    const activeColor = accentColorHex || ACCENT_COLORS.find(c => c.class === accentColor)?.value || defaultColor;
 
     return (
         <div className={`flex flex-col ${className} ${disabled ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -28,7 +36,7 @@ const AppSlider = ({
                 <div className="mb-2">
                     <div className="flex justify-between items-center">
                         {label && (
-                            <label className="block text-sm font-medium">
+                            <label className="block text-sm font-medium break-words">
                                 {label} {required && <span className="text-destructive">*</span>}
                             </label>
                         )}
@@ -51,18 +59,20 @@ const AppSlider = ({
                     onTouchStart={() => setIsDragging(true)}
                     onTouchEnd={() => setIsDragging(false)}
                     disabled={disabled}
-                    className={`w-full h-2 bg-input rounded-lg appearance-none cursor-pointer accent-${accentColor}`}
+                    className="w-full h-2 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[var(--slider-accent)] [&::-webkit-slider-thumb]:shadow-md [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[var(--slider-accent)] [&::-moz-range-thumb]:border-none"
                     style={{
-                        accentColor: `var(--color-${accentColor})`
+                        '--slider-accent': activeColor,
+                        background: `linear-gradient(to right, var(--slider-accent) 0%, var(--slider-accent) ${percentage}%, #e5e7eb ${percentage}%, #e5e7eb 100%)`
                     }}
                 />
 
                 {/* Tooltip */}
                 {showTooltip && isDragging && (
                     <div
-                        className="absolute -top-8 transform -translate-x-1/2 bg-popover text-popover-foreground text-xs px-2 py-1 rounded shadow-md border border-border"
+                        className={`absolute -top-8 transform -translate-x-1/2 text-white text-xs px-2 py-1 rounded shadow-md ${!accentColorHex ? `bg-${accentColor}` : ''}`}
                         style={{
-                            left: `${((value - min) / (max - min)) * 100}%`
+                            left: `${((value - min) / (max - min)) * 100}%`,
+                            backgroundColor: accentColorHex
                         }}
                     >
                         {value}

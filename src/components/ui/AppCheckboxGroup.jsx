@@ -12,6 +12,7 @@ const AppCheckboxGroup = ({
     className = '',
     helpText,
     accentColor = 'primary',
+    accentColorHex,
     direction = 'vertical'
 }) => {
     const [otherValue, setOtherValue] = useState('');
@@ -76,7 +77,7 @@ const AppCheckboxGroup = ({
                 <div className="mb-2">
                     <div className="flex justify-between items-center">
                         {label && (
-                            <label className="block text-sm font-medium">
+                            <label className="block text-sm font-medium break-words">
                                 {label} {required && <span className="text-destructive">*</span>}
                             </label>
                         )}
@@ -94,10 +95,10 @@ const AppCheckboxGroup = ({
                                 checked={value?.includes(option.value) || false}
                                 onChange={(e) => handleCheckboxChange(option.value, e.target.checked)}
                                 disabled={disabled}
-                                className={`peer h-4 w-4 shrink-0 rounded-sm border border-input ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none checked:bg-${accentColor} checked:border-${accentColor}`}
+                                className={`peer h-4 w-4 shrink-0 rounded-sm border border-input ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none ${!accentColorHex ? `checked:bg-${accentColor} checked:border-${accentColor}` : ''}`}
                                 style={{
-                                    backgroundColor: value?.includes(option.value) ? `var(--color-${accentColor})` : undefined,
-                                    borderColor: value?.includes(option.value) ? `var(--color-${accentColor})` : undefined
+                                    backgroundColor: value?.includes(option.value) ? (accentColorHex || `var(--color-${accentColor})`) : undefined,
+                                    borderColor: value?.includes(option.value) ? (accentColorHex || `var(--color-${accentColor})`) : undefined
                                 }}
                             />
                             <svg
@@ -128,10 +129,10 @@ const AppCheckboxGroup = ({
                                     checked={isOtherSelected}
                                     onChange={(e) => handleOtherCheckboxChange(e.target.checked)}
                                     disabled={disabled}
-                                    className={`peer h-4 w-4 shrink-0 rounded-sm border border-input ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none checked:bg-${accentColor} checked:border-${accentColor}`}
+                                    className={`peer h-4 w-4 shrink-0 rounded-sm border border-input ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none ${!accentColorHex ? `checked:bg-${accentColor} checked:border-${accentColor}` : ''}`}
                                     style={{
-                                        backgroundColor: isOtherSelected ? `var(--color-${accentColor})` : undefined,
-                                        borderColor: isOtherSelected ? `var(--color-${accentColor})` : undefined
+                                        backgroundColor: isOtherSelected ? (accentColorHex || `var(--color-${accentColor})`) : undefined,
+                                        borderColor: isOtherSelected ? (accentColorHex || `var(--color-${accentColor})`) : undefined
                                     }}
                                 />
                                 <svg

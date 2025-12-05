@@ -134,7 +134,7 @@ export default function PreviewPage() {
     const hasErrors = Object.values(errors).some((error) => error !== null);
 
     return (
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto p-4">
             <div className="flex items-center justify-between mb-8">
                 <button
                     onClick={() => navigate(`/builder/${id}`)}

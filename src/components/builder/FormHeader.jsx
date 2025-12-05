@@ -14,32 +14,42 @@ export default function FormHeader() {
 
     if (!activeForm) return null;
 
-    const textareaRef = React.useRef(null);
+    const descriptionRef = React.useRef(null);
+    const titleRef = React.useRef(null);
+
+    const adjustHeight = (ref) => {
+        if (ref.current) {
+            ref.current.style.height = 'auto';
+            ref.current.style.height = ref.current.scrollHeight + 'px';
+        }
+    };
 
     React.useEffect(() => {
-        if (textareaRef.current) {
-            textareaRef.current.style.height = 'auto';
-            textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
-        }
+        adjustHeight(descriptionRef);
     }, [activeForm.description]);
+
+    React.useEffect(() => {
+        adjustHeight(titleRef);
+    }, [activeForm.title]);
 
     return (
         <div
             className="space-y-4"
             onClick={closeSidebar}
         >
-            <input
-                type="text"
+            <textarea
+                ref={titleRef}
                 value={activeForm.title}
                 onChange={(e) => updateFormMetadata({ title: e.target.value })}
-                className="w-full text-3xl font-bold border-b border-transparent hover:border-border focus:border-primary focus:outline-none bg-transparent transition-colors py-2"
+                className="w-full text-2xl md:text-3xl font-bold border-b border-transparent hover:border-border focus:border-primary focus:outline-none bg-transparent transition-colors py-2 resize-none overflow-hidden"
                 placeholder="Form Title"
+                rows={1}
             />
             <textarea
-                ref={textareaRef}
+                ref={descriptionRef}
                 value={activeForm.description}
                 onChange={(e) => updateFormMetadata({ description: e.target.value })}
-                className="w-full text-base text-muted-foreground border-b border-transparent hover:border-border focus:border-primary focus:outline-none bg-transparent resize-none transition-colors py-2 overflow-hidden"
+                className="w-full text-sm md:text-base text-muted-foreground border-b border-transparent hover:border-border focus:border-primary focus:outline-none bg-transparent resize-none transition-colors py-2 overflow-hidden"
                 placeholder="Form Description"
                 rows={1}
             />

@@ -24,7 +24,7 @@ const AppTextInput = ({
                 <div className="mb-2">
                     <div className="flex justify-between items-center">
                         {label && (
-                            <label className="block text-sm font-medium">
+                            <label className="block text-sm font-medium break-words">
                                 {label} {required && <span className="text-destructive">*</span>}
                             </label>
                         )}
