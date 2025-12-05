@@ -52,11 +52,11 @@ export default function DropdownInput({ field, value, onChange, onBlur, error, a
         if (!selectedValues.length) return config.placeholder || 'Select option...';
 
         if (isMulti) {
-            if (selectedValues.length === 1) {
-                const option = options.find(o => o.value === selectedValues[0]);
-                return option ? option.label : selectedValues[0];
-            }
-            return `${selectedValues.length} options selected`;
+            const labels = selectedValues.map(v => {
+                const option = options.find(o => o.value === v);
+                return option ? option.label : v;
+            });
+            return labels.join(', ');
         } else {
             const option = options.find(o => o.value === selectedValues[0]);
             return option ? option.label : selectedValues[0];
