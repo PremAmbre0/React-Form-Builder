@@ -34,6 +34,7 @@ const FIELD_COMPONENTS = {
 };
 
 const InteractiveField = ({ component: Component, field, accentColor }) => {
+    // eslint-disable-next-line no-unused-vars
     const [value, setValue] = React.useState(field.type === 'checkboxGroup' ? [] : '');
 
     return (

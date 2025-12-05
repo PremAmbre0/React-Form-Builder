@@ -2,7 +2,7 @@ import React from 'react';
 import AppSlider from '../ui/AppSlider';
 import { ACCENT_COLORS } from '../../constants/colors';
 
-export default function SliderInput({ field, value, onChange, onBlur, error, accentColor, isLast, disabled, hideLabel }) {
+export default function SliderInput({ field, value, onChange, error, accentColor, disabled, hideLabel }) {
     const { config, validation } = field;
     const accentColorHex = ACCENT_COLORS.find(c => c.class === accentColor)?.value;
 

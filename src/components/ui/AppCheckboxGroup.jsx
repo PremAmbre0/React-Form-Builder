@@ -24,11 +24,12 @@ const AppCheckboxGroup = ({
         if (allowOther && value && value.length > 0) {
             const knownValues = options.map(o => o.value);
             const unknownValue = value.find(v => !knownValues.includes(v));
-            if (unknownValue) {
+            if (unknownValue && (unknownValue !== otherValue || !isOtherSelected)) {
                 setOtherValue(unknownValue);
                 setIsOtherSelected(true);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value, options, allowOther]);
 
     const handleCheckboxChange = (optionValue, checked) => {

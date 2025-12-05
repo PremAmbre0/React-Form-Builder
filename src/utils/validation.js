@@ -102,7 +102,7 @@ export function validateField(field, value) {
         if (type === 'url' || (type === 'text' && config?.validationType === 'website')) {
             try {
                 new URL(value);
-            } catch (_) {
+            } catch {
                 return 'Please enter a valid URL';
             }
         }
@@ -129,7 +129,7 @@ export function validateField(field, value) {
                 if (!regex.test(value)) {
                     return validation.patternErrorMessage || 'Invalid format';
                 }
-            } catch (e) {
+            } catch {
                 console.warn('Invalid regex pattern:', validation.patternValue);
             }
         }

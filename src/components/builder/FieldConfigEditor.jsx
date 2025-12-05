@@ -40,11 +40,7 @@ export default function FieldConfigEditor({ field, updateField }) {
     // Check for invalid Min/Max configuration
     const isMinMaxInvalid = validation.min !== undefined && validation.max !== undefined && validation.min > validation.max;
     const isDateRangeInvalid = validation.minDate && validation.maxDate && new Date(validation.minDate) > new Date(validation.maxDate);
-    const isTimeRangeInvalid = validation.minTime && validation.maxTime && (() => {
-        const [minH, minM] = validation.minTime.split(':').map(Number);
-        const [maxH, maxM] = validation.maxTime.split(':').map(Number);
-        return (minH * 60 + minM) > (maxH * 60 + maxM);
-    })();
+
 
     return (
         <div className="space-y-4 p-1">

@@ -3,7 +3,7 @@ import { Clock, X } from 'lucide-react';
 import AppTimePicker from '../ui/AppTimePicker';
 import '../../assets/styles/CustomDatePicker.css';
 
-export default function TimeInput({ field, value, onChange, onBlur, error, accentColor, isLast, hideLabel }) {
+export default function TimeInput({ field, value, onChange, error, accentColor, hideLabel }) {
     const { config, validation } = field;
     const [isPickerOpen, setIsPickerOpen] = useState(false);
     const containerRef = useRef(null);

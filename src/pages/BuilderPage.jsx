@@ -9,7 +9,7 @@ import ContextualSidebar from '../components/builder/ContextualSidebar';
 export default function BuilderPage() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { activeForm, loadForm, openSidebar } = useFormStore();
+    const { activeForm, loadForm } = useFormStore();
 
     useEffect(() => {
         if (id) {

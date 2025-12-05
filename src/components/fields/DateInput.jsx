@@ -1,11 +1,11 @@
-import React, { forwardRef, useState } from 'react';
+import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { Calendar, X } from 'lucide-react';
 import '../../assets/styles/CustomDatePicker.css';
 import { getAccentColorHex } from '../../utils/colors';
 
-export default function DateInput({ field, value, onChange, onBlur, error, accentColor, isLast, hideLabel }) {
+export default function DateInput({ field, value, onChange, onBlur, error, accentColor, hideLabel }) {
     const { config, validation } = field;
     const [portalContainer, setPortalContainer] = useState(null);
     const accentHex = getAccentColorHex(accentColor);

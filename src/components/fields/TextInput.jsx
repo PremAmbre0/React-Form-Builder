@@ -1,7 +1,7 @@
 import React from 'react';
 import AppTextInput from '../ui/AppTextInput';
 
-export default function TextInput({ field, value, onChange, onBlur, error, accentColor, isLast, disabled, hideLabel }) {
+export default function TextInput({ field, value, onChange, onBlur, error, accentColor, disabled, hideLabel }) {
     const { config, validation } = field;
 
     const handleClear = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { X } from 'lucide-react';
 
-export default function NumberInput({ field, value, onChange, onBlur, error, accentColor, isLast, hideLabel }) {
+export default function NumberInput({ field, value, onChange, onBlur, error, accentColor, hideLabel }) {
     const { config, validation } = field;
 
     const handleClear = () => {

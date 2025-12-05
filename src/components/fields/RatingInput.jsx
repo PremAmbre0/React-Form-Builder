@@ -1,7 +1,7 @@
 import React from 'react';
 import AppRating from '../ui/AppRating';
 
-export default function RatingInput({ field, value, onChange, onBlur, error, accentColor, isLast, disabled, hideLabel }) {
+export default function RatingInput({ field, value, onChange, error, accentColor, disabled, hideLabel }) {
     const { config, validation } = field;
 
     return (

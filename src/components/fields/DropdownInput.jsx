@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Check, X } from 'lucide-react';
 
-export default function DropdownInput({ field, value, onChange, onBlur, error, accentColor, isLast, hideLabel }) {
+export default function DropdownInput({ field, value, onChange, onBlur, error, accentColor, hideLabel }) {
     const { config, validation } = field;
     const isMulti = config.multiSelect;
     const [isOpen, setIsOpen] = useState(false);

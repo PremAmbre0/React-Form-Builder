@@ -23,12 +23,17 @@ const AppRadioGroup = ({
         if (value) {
             const isKnownOption = options.some(o => o.value === value);
             if (!isKnownOption && allowOther && value) {
-                setIsOtherSelected(true);
-                setOtherValue(value);
+                if (value !== otherValue || !isOtherSelected) {
+                    setIsOtherSelected(true);
+                    setOtherValue(value);
+                }
             } else {
-                setIsOtherSelected(false);
+                if (isOtherSelected) {
+                    setIsOtherSelected(false);
+                }
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value, options, allowOther]);
 
     const handleRadioChange = (optionValue) => {

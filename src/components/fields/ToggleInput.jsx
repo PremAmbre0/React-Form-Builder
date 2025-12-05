@@ -2,7 +2,7 @@ import React from 'react';
 import AppToggle from '../ui/AppToggle';
 import { ACCENT_COLORS } from '../../constants/colors';
 
-export default function ToggleInput({ field, value, onChange, onBlur, error, accentColor, isLast, disabled, hideLabel }) {
+export default function ToggleInput({ field, value, onChange, error, accentColor, disabled, hideLabel }) {
     const { config, validation } = field;
     const accentColorHex = ACCENT_COLORS.find(c => c.class === accentColor)?.value;
 

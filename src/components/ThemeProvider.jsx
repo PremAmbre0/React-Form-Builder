@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import useFormStore from '../store/useFormStore';
-import { generatePalette, hexToRgb } from '../utils/colorGenerator';
+import { generatePalette } from '../utils/colorGenerator';
 import { getAccentColorHex } from '../utils/colors';
 
 export default function ThemeProvider({ children }) {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function TextArea({ field, value, onChange, onBlur, error, accentColor, isLast, disabled, hideLabel }) {
+export default function TextArea({ field, value, onChange, onBlur, error, disabled, hideLabel }) {
     const { config, validation } = field;
 
     return (
