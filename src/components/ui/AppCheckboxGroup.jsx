@@ -13,7 +13,8 @@ const AppCheckboxGroup = ({
     helpText,
     accentColor = 'primary',
     accentColorHex,
-    direction = 'vertical'
+    direction = 'vertical',
+    singleSelect = false
 }) => {
     const [otherValue, setOtherValue] = useState('');
     const [isOtherSelected, setIsOtherSelected] = useState(false);
@@ -32,10 +33,14 @@ const AppCheckboxGroup = ({
 
     const handleCheckboxChange = (optionValue, checked) => {
         let newValue = [...(value || [])];
-        if (checked) {
-            newValue.push(optionValue);
+        if (singleSelect) {
+            newValue = checked ? [optionValue] : [];
         } else {
-            newValue = newValue.filter(v => v !== optionValue);
+            if (checked) {
+                newValue.push(optionValue);
+            } else {
+                newValue = newValue.filter(v => v !== optionValue);
+            }
         }
         onChange(newValue);
     };
@@ -43,10 +48,31 @@ const AppCheckboxGroup = ({
     const handleOtherCheckboxChange = (checked) => {
         setIsOtherSelected(checked);
         let newValue = [...(value || [])];
-        if (checked) {
-            if (otherValue) newValue.push(otherValue);
+
+        if (singleSelect) {
+            if (checked) {
+                // If checking Other in single select, we clear all normal options.
+                // But we need to see if 'otherValue' exists to set it.
+                newValue = otherValue ? [otherValue] : [];
+                // Actually, if we just selected "Other", the value IS whatever is in the text box?
+                // But if text box is empty, maybe value is empty or some marker?
+                // The existing logic relies on 'value' containing the unknown string.
+                // If we check the box, we might not have a string yet.
+                // But CheckboxGroup logic implies 'isOtherSelected' is separate UI state?
+                // Actually existing logic: if checked, if(otherValue) newValue.push.
+                // If I check 'Other' and box is empty, value doesn't change yet?
+                // Let's keep consistent with existing "Other" behavior but clear others.
+                if (otherValue) newValue = [otherValue];
+                else newValue = []; // Or maybe we should keep it empty until typed?
+            } else {
+                newValue = [];
+            }
         } else {
-            if (otherValue) newValue = newValue.filter(v => v !== otherValue);
+            if (checked) {
+                if (otherValue) newValue.push(otherValue);
+            } else {
+                if (otherValue) newValue = newValue.filter(v => v !== otherValue);
+            }
         }
         onChange(newValue);
     };
@@ -56,17 +82,17 @@ const AppCheckboxGroup = ({
         setOtherValue(newOtherValue);
 
         if (isOtherSelected) {
-            // Remove old other value and add new one
-            // This is tricky because we don't know what the OLD other value was in the 'value' array easily without tracking it.
-            // But we know 'value' contains 'otherValue' (maybe).
-
-            // Simpler approach: Filter out all known options, then replace the rest with newOtherValue
-            const knownValues = options.map(o => o.value);
-            let newValue = (value || []).filter(v => knownValues.includes(v));
-            if (newOtherValue) {
-                newValue.push(newOtherValue);
+            if (singleSelect) {
+                onChange(newOtherValue ? [newOtherValue] : []);
+            } else {
+                // Simpler approach: Filter out all known options, then replace the rest with newOtherValue
+                const knownValues = options.map(o => o.value);
+                let newValue = (value || []).filter(v => knownValues.includes(v));
+                if (newOtherValue) {
+                    newValue.push(newOtherValue);
+                }
+                onChange(newValue);
             }
-            onChange(newValue);
         }
     };
 
@@ -157,7 +183,7 @@ const AppCheckboxGroup = ({
                                 onChange={handleOtherInputChange}
                                 placeholder="Please specify..."
                                 disabled={disabled}
-                                className={`w-full px-3 py-1.5 ml-6 text-sm border rounded-md focus:outline-none focus:border-${accentColor} transition-colors`}
+                                className={`w-full px-3 py-1.5 ml-6 text-sm border rounded-md focus:outline-none focus:border-${accentColor} placeholder:text-${accentColor}/60 transition-colors`}
                             />
                         )}
                     </div>

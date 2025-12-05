@@ -119,11 +119,18 @@ export default function DropdownInput({ field, value, onChange, onBlur, error, a
                                     <div
                                         key={index}
                                         onClick={() => handleSelect(option.value)}
-                                        className={`px-3 py-2 text-sm cursor-pointer flex items-center justify-between transition-colors hover:bg-accent hover:text-accent-foreground ${isSelected ? 'bg-accent/10 font-medium' : ''}`}
-                                        style={isSelected ? { color: `var(--${accentColor})` } : {}}
+                                        className={`group relative px-3 py-2 text-sm cursor-pointer flex items-center justify-between transition-colors
+                                            ${isSelected ? 'font-medium' : ''}
+                                        `}
                                     >
-                                        <span>{option.label}</span>
-                                        {isSelected && <Check size={14} style={{ color: `var(--${accentColor})` }} />}
+                                        <div
+                                            className={`absolute inset-0 z-0 transition-opacity duration-200 pointer-events-none rounded-sm
+                                                ${isSelected ? 'opacity-20' : 'opacity-0 group-hover:opacity-10'}
+                                                bg-${accentColor}
+                                            `}
+                                        />
+                                        <span className="relative z-10">{option.label}</span>
+                                        {isSelected && <Check size={14} className={`relative z-10 text-${accentColor}`} />}
                                     </div>
                                 );
                             })}
@@ -137,8 +144,8 @@ export default function DropdownInput({ field, value, onChange, onBlur, error, a
                 <div className="mt-2">
                     <input
                         type="text"
-                        placeholder="Please specify"
-                        className={`w-full px-3 py-2 border rounded-md bg-background text-sm focus:outline-none transition-colors ${`border-input focus:border-${accentColor}`
+                        placeholder="Please specify..."
+                        className={`w-full px-3 py-2 border rounded-md bg-background text-sm focus:outline-none transition-colors ${`border-input focus:border-${accentColor} placeholder:text-${accentColor}/60`
                             }`}
                         style={{ borderColor: `var(--${accentColor})` }}
                     />

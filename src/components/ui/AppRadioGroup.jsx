@@ -120,7 +120,7 @@ const AppRadioGroup = ({
                                 onChange={handleOtherInputChange}
                                 placeholder="Please specify..."
                                 disabled={disabled}
-                                className={`w-full px-3 py-1.5 ml-6 text-sm border rounded-md focus:outline-none focus:border-${accentColor} transition-colors`}
+                                className={`w-full px-3 py-1.5 ml-6 text-sm border rounded-md focus:outline-none focus:border-${accentColor} placeholder:text-${accentColor}/60 transition-colors`}
                             />
                         )}
                     </div>

@@ -20,6 +20,7 @@ export default function CheckboxGroup({ field, value, onChange, onBlur, error, a
             accentColor={accentColor}
             accentColorHex={accentColorHex}
             className="mb-8"
+            singleSelect={!config.multiSelect}
         />
     );
 }
