@@ -22,9 +22,34 @@ const parseDate = (isoString) => {
 
 export default function AppTimePicker({ value, onChange, onClose, accentColor, format = '12', triggerRef }) {
     const is24Hour = format === '24';
-    const [selectedHour, setSelectedHour] = useState(is24Hour ? 0 : 12);
-    const [selectedMinute, setSelectedMinute] = useState(0);
-    const [selectedPeriod, setSelectedPeriod] = useState('AM');
+
+    // Parse initial value for state
+    const getInitialTime = () => {
+        if (!value) return null;
+        const date = new Date(value);
+        if (isNaN(date.getTime())) return null;
+
+        let h = date.getHours();
+        const m = date.getMinutes();
+        let p = 'AM';
+
+        if (h >= 12) {
+            p = 'PM';
+        }
+
+        if (!is24Hour) {
+            if (h > 12) h -= 12;
+            if (h === 0) h = 12;
+        }
+
+        return { h, m, p };
+    };
+
+    const initialTime = getInitialTime();
+
+    const [selectedHour, setSelectedHour] = useState(initialTime ? initialTime.h : (is24Hour ? 0 : 12));
+    const [selectedMinute, setSelectedMinute] = useState(initialTime ? initialTime.m : 0);
+    const [selectedPeriod, setSelectedPeriod] = useState(initialTime ? initialTime.p : 'AM');
     const accentHex = getAccentColorHex(accentColor);
 
     const ITEM_HEIGHT = 40;

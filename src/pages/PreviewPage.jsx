@@ -225,16 +225,14 @@ export default function PreviewPage() {
                 isOpen={isModalOpen}
                 onClose={() => {
                     setIsModalOpen(false);
-                    setFormData({});
+                    // Do not clear formData on close as per user request
                     setErrors({});
                 }}
-                data={Object.entries(formData).reduce((acc, [key, value]) => {
-                    const field = activeForm.fields.find(f => f.id === key);
-                    if (field) {
-                        acc[field.config.label] = value;
-                    }
-                    return acc;
-                }, {})}
+                data={activeForm.fields.map(field => ({
+                    id: field.id,
+                    label: field.config.label,
+                    value: formData[field.id] !== undefined ? formData[field.id] : null
+                }))}
             />
         </div>
     );
