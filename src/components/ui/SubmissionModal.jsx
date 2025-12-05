@@ -36,11 +36,6 @@ export default function SubmissionModal({ isOpen, onClose, data }) {
                 </button>
 
                 <div className="text-center mb-6 mt-2">
-                    <div className="flex justify-center mb-3">
-                        <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                            <CheckCircle size={24} />
-                        </div>
-                    </div>
                     <h2 className="text-2xl font-bold">Submission Successful!</h2>
                     <p className="text-muted-foreground mt-1 text-sm">
                         Your form has been successfully submitted.
@@ -51,8 +46,8 @@ export default function SubmissionModal({ isOpen, onClose, data }) {
                     <button
                         onClick={() => setActiveTab('report')}
                         className={`flex items-center gap-2 px-4 py-2 border-b-2 font-medium text-sm transition-colors ${activeTab === 'report'
-                                ? 'border-primary text-primary'
-                                : 'border-transparent text-muted-foreground hover:text-foreground'
+                            ? 'border-primary text-primary'
+                            : 'border-transparent text-muted-foreground hover:text-foreground'
                             }`}
                     >
                         <FileText size={16} />
@@ -61,8 +56,8 @@ export default function SubmissionModal({ isOpen, onClose, data }) {
                     <button
                         onClick={() => setActiveTab('table')}
                         className={`flex items-center gap-2 px-4 py-2 border-b-2 font-medium text-sm transition-colors ${activeTab === 'table'
-                                ? 'border-primary text-primary'
-                                : 'border-transparent text-muted-foreground hover:text-foreground'
+                            ? 'border-primary text-primary'
+                            : 'border-transparent text-muted-foreground hover:text-foreground'
                             }`}
                     >
                         <Table2 size={16} />
@@ -71,8 +66,8 @@ export default function SubmissionModal({ isOpen, onClose, data }) {
                     <button
                         onClick={() => setActiveTab('json')}
                         className={`flex items-center gap-2 px-4 py-2 border-b-2 font-medium text-sm transition-colors ${activeTab === 'json'
-                                ? 'border-primary text-primary'
-                                : 'border-transparent text-muted-foreground hover:text-foreground'
+                            ? 'border-primary text-primary'
+                            : 'border-transparent text-muted-foreground hover:text-foreground'
                             }`}
                     >
                         <FileJson size={16} />

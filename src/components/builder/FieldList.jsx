@@ -1,6 +1,6 @@
 import React from 'react';
 import useFormStore from '../../store/useFormStore';
-import { Trash2, Pencil, Plus, GripVertical } from 'lucide-react';
+import { Trash2, Pencil, Plus, GripVertical, FilePlus } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
@@ -69,15 +69,25 @@ export default function FieldList() {
         <div className="flex flex-col h-full">
             <div className="">
                 {activeForm.fields.length === 0 ? (
-                    <button
+                    <div
                         onClick={() => {
                             setInsertionIndex(0);
                             openSidebar('picker');
                         }}
-                        className="w-full h-32 flex flex-col items-center justify-center text-muted-foreground border-2 border-dashed border-border rounded-lg bg-accent/5 hover:bg-accent/10 hover:border-primary/50 hover:text-primary transition-all"
+                        className="flex flex-col items-center justify-center py-12 px-4 text-center border-2 border-solid border-border rounded-xl bg-accent/5 hover:bg-accent/10 hover:border-primary/20 transition-all duration-300 group cursor-pointer"
                     >
-                        <p>Click here to start adding fields to your form</p>
-                    </button>
+                        <div className="bg-background p-4 rounded-full shadow-sm mb-4 group-hover:scale-110 group-hover:shadow-md transition-all duration-300 ring-1 ring-border/50">
+                            <FilePlus className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-foreground mb-1">Start building your form</h3>
+                        <p className="text-sm text-muted-foreground max-w-sm mb-6">
+                            Your form is currently empty. Add your first field to get started.
+                        </p>
+                        <button className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-primary-foreground bg-primary hover:bg-primary/90 rounded-md shadow transition-colors">
+                            <Plus className="w-4 h-4" />
+                            Add First Field
+                        </button>
+                    </div>
                 ) : (
                     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
                         <Droppable droppableId="fields">
@@ -107,7 +117,7 @@ export default function FieldList() {
                                                     >
                                                         {/* Top Add Button */}
                                                         <div className={cn(
-                                                            "absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-opacity",
+                                                            "absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20",
                                                             isDragging
                                                                 ? "opacity-0"
                                                                 : (isSelected
@@ -120,7 +130,7 @@ export default function FieldList() {
                                                                     setInsertionIndex(index);
                                                                     openSidebar('picker');
                                                                 }}
-                                                                className="relative bg-background border border-primary text-muted-foreground rounded-full p-1 shadow-sm hover:scale-110 transition-all"
+                                                                className="relative bg-white border border-primary text-muted-foreground rounded-full p-1 shadow-sm hover:scale-110 transition-all"
                                                                 title="Insert Field Above"
                                                             >
                                                                 <Plus size={14} />
@@ -199,7 +209,7 @@ export default function FieldList() {
 
                                                         {/* Bottom Add Button */}
                                                         <div className={cn(
-                                                            "absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 transition-opacity",
+                                                            "absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20",
                                                             isDragging
                                                                 ? "opacity-0"
                                                                 : (isSelected
@@ -212,7 +222,7 @@ export default function FieldList() {
                                                                     setInsertionIndex(index + 1);
                                                                     openSidebar('picker');
                                                                 }}
-                                                                className="relative bg-background border border-primary text-muted-foreground rounded-full p-1 shadow-sm hover:scale-110 transition-all"
+                                                                className="relative bg-white border border-primary text-muted-foreground rounded-full p-1 shadow-sm hover:scale-110 transition-all"
                                                                 title="Insert Field Below"
                                                             >
                                                                 <Plus size={14} />

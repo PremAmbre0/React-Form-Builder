@@ -9,6 +9,7 @@ export default function HomePage() {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
     const [sortBy, setSortBy] = useState('newest');
+    const hasForms = allForms.length > 0;
 
     const sortOptions = [
         { label: 'Newest First', value: 'newest' },
@@ -53,8 +54,8 @@ export default function HomePage() {
                         type="text"
                         placeholder="Search forms..."
                         value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className={`w-full pl-9 pr-8 py-2 h-10 rounded-md border bg-background text-sm focus:outline-none transition-colors ${searchQuery ? 'border-primary' : 'border-input focus:border-primary'}`}
+                        disabled={!hasForms}
+                        className={`w-full pl-9 pr-8 py-2 h-10 rounded-md border bg-background text-sm focus:outline-none transition-colors ${searchQuery ? 'border-primary' : 'border-input focus:border-primary'} ${!hasForms ? 'opacity-50 cursor-not-allowed' : ''}`}
                     />
                     {searchQuery && (
                         <button
@@ -68,7 +69,7 @@ export default function HomePage() {
 
                 <div className="flex flex-row w-full md:w-auto gap-3">
                     {/* Sort Dropdown */}
-                    <div className="w-auto md:w-40 shrink-0">
+                    <div className={`w-auto md:w-40 shrink-0 ${!hasForms ? 'opacity-50 pointer-events-none' : ''}`}>
                         <AppDropdown
                             value={sortBy}
                             options={sortOptions}
@@ -106,16 +107,27 @@ export default function HomePage() {
             </div>
 
             {filteredAndSortedForms.length === 0 ? (
-                <div className="text-center py-20 border-2 border-dashed border-border rounded-lg bg-card/50">
-                    <FileText className="mx-auto h-12 w-12 text-muted-foreground/50" />
-                    <h3 className="mt-4 text-lg font-semibold">
+                <div className="flex flex-col items-center justify-center py-16 px-4 text-center border-2 border-solid border-border rounded-xl bg-accent/5 hover:bg-accent/10 hover:border-primary/20 transition-all duration-300 group">
+                    <div className="bg-background p-4 rounded-full shadow-sm mb-4 group-hover:scale-110 group-hover:shadow-md transition-all duration-300 ring-1 ring-border/50">
+                        <FileText className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">
                         {searchQuery ? 'No forms found' : 'No forms yet'}
                     </h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm text-muted-foreground max-w-sm mb-6">
                         {searchQuery
                             ? `No forms match "${searchQuery}"`
                             : 'Create your first form to get started.'}
                     </p>
+                    {!searchQuery && (
+                        <button
+                            onClick={handleCreateNew}
+                            className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-primary-foreground bg-primary hover:bg-primary/90 rounded-md shadow transition-colors"
+                        >
+                            <Plus className="w-4 h-4" />
+                            Create New Form
+                        </button>
+                    )}
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
