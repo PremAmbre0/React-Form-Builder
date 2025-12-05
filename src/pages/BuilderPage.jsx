@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useFormStore from '../store/useFormStore';
-import { ArrowLeft, Eye, Plus } from 'lucide-react';
+import { ChevronLeft, Eye, Plus } from 'lucide-react';
 import FormHeader from '../components/builder/FormHeader';
 import FieldList from '../components/builder/FieldList';
 import ContextualSidebar from '../components/builder/ContextualSidebar';
@@ -46,8 +46,8 @@ export default function BuilderPage() {
                                         onClick={() => navigate('/')}
                                         className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
                                     >
-                                        <ArrowLeft size={16} />
-                                        <span>Back to Home</span>
+                                        <ChevronLeft size={24} />
+                                        <span className="hidden md:inline">Back to Home</span>
                                     </button>
                                     <button
                                         onClick={() => navigate(`/preview/${id}`)}

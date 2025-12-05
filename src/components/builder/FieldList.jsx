@@ -131,9 +131,6 @@ export default function FieldList() {
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
                                                                 selectField(field.id);
-                                                                if (window.matchMedia('(min-width: 1024px)').matches) {
-                                                                    openSidebar('settings');
-                                                                }
                                                             }}
                                                             className={cn(
                                                                 "relative transition-all rounded-lg p-3 md:p-4 border bg-card grid grid-cols-[auto_1fr_auto] grid-rows-[auto_auto] gap-x-4 gap-y-2 items-start",
@@ -162,7 +159,9 @@ export default function FieldList() {
                                                             {/* 1:3 Actions */}
                                                             <div className={cn(
                                                                 "col-start-3 row-start-1 flex gap-2 transition-opacity shrink-0",
-                                                                isSelected ? "opacity-100" : "opacity-0 group-hover/field:opacity-100"
+                                                                isSelected
+                                                                    ? "opacity-100 pointer-events-auto"
+                                                                    : "opacity-0 pointer-events-none group-hover/field:opacity-100 group-hover/field:pointer-events-auto"
                                                             )}>
                                                                 <button
                                                                     onClick={(e) => {

@@ -14,44 +14,24 @@ export default function FormHeader() {
 
     if (!activeForm) return null;
 
-    const descriptionRef = React.useRef(null);
-    const titleRef = React.useRef(null);
-
-    const adjustHeight = (ref) => {
-        if (ref.current) {
-            ref.current.style.height = 'auto';
-            ref.current.style.height = ref.current.scrollHeight + 'px';
-        }
-    };
-
-    React.useEffect(() => {
-        adjustHeight(descriptionRef);
-    }, [activeForm.description]);
-
-    React.useEffect(() => {
-        adjustHeight(titleRef);
-    }, [activeForm.title]);
-
     return (
         <div
             className="space-y-4"
             onClick={closeSidebar}
         >
-            <textarea
-                ref={titleRef}
+            <input
+                type="text"
                 value={activeForm.title}
                 onChange={(e) => updateFormMetadata({ title: e.target.value })}
-                className="w-full text-2xl md:text-3xl font-bold border-b border-transparent hover:border-border focus:border-primary focus:outline-none bg-transparent transition-colors py-2 resize-none overflow-hidden"
+                className="w-full text-2xl md:text-3xl font-bold border-b border-transparent hover:border-border focus:border-primary focus:outline-none bg-transparent transition-colors py-2 truncate"
                 placeholder="Form Title"
-                rows={1}
             />
-            <textarea
-                ref={descriptionRef}
+            <input
+                type="text"
                 value={activeForm.description}
                 onChange={(e) => updateFormMetadata({ description: e.target.value })}
-                className="w-full text-sm md:text-base text-muted-foreground border-b border-transparent hover:border-border focus:border-primary focus:outline-none bg-transparent resize-none transition-colors py-2 overflow-hidden"
+                className="w-full text-sm md:text-base text-muted-foreground border-b border-transparent hover:border-border focus:border-primary focus:outline-none bg-transparent transition-colors py-2 truncate"
                 placeholder="Form Description"
-                rows={1}
             />
 
             <div className="pt-4 flex items-center gap-4">
@@ -72,6 +52,6 @@ export default function FormHeader() {
                     ))}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

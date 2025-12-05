@@ -45,7 +45,7 @@ const AppRating = ({
                 </div>
             )}
 
-            <div className="flex items-center gap-1" onMouseLeave={() => setHoverValue(0)}>
+            <div className="flex items-center gap-1 flex-wrap" onMouseLeave={() => setHoverValue(0)}>
                 {[...Array(maxStars)].map((_, index) => {
                     const ratingValue = index + 1;
                     const isFilled = (hoverValue || value) >= ratingValue;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useFormStore from '../store/useFormStore';
-import { ArrowLeft, Edit } from 'lucide-react';
+import { ChevronLeft, Edit } from 'lucide-react';
 import SubmissionModal from '../components/ui/SubmissionModal';
 import { validateField } from '../utils/validation';
 import { isFieldVisible, isFieldEnabled, cleanDataBeforeSubmit } from '../utils/rules';
@@ -140,8 +140,8 @@ export default function PreviewPage() {
                     onClick={() => navigate(`/builder/${id}`)}
                     className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                 >
-                    <ArrowLeft size={20} />
-                    Back to Builder
+                    <ChevronLeft size={24} />
+                    <span className="hidden md:inline">Back to Builder</span>
                 </button>
                 <button
                     onClick={() => navigate(`/builder/${id}`)}
