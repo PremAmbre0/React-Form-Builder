@@ -198,11 +198,27 @@ export default function FieldConfigEditor({ field, updateField }) {
                                     type="number"
                                     value={config.step || 1}
                                     onChange={(e) => {
+                                        // Allow typing freely, update config directly
+                                        handleConfigChange('step', e.target.value);
+                                    }}
+                                    onBlur={(e) => {
+                                        let val = parseFloat(e.target.value);
                                         const range = (validation.max !== undefined ? validation.max : 100) - (validation.min !== undefined ? validation.min : 0);
                                         const maxStep = Math.max(0, range / 2);
-                                        handleConfigChange('step', Math.min(parseFloat(e.target.value), maxStep));
+
+                                        // 1. Round to nearest integer (standard rounding: .5 goes up)
+                                        val = Math.round(val);
+                                        // Ensure at least 1
+                                        if (val < 1) val = 1;
+
+                                        // 2. Max cap check
+                                        if (val > maxStep && maxStep > 0) {
+                                            val = Math.floor(maxStep); // Floor maxStep to ensure integer? Or round? User said "round off steps". Let's stick to integer.
+                                            if (val < 1) val = 1; // Safety fallback
+                                        }
+
+                                        handleConfigChange('step', val);
                                     }}
-                                    max={(validation.max !== undefined ? validation.max : 100) - (validation.min !== undefined ? validation.min : 0) / 2}
                                     className="w-full px-3 py-2 border border-input rounded-md bg-background text-sm focus:outline-none focus:border-primary"
                                 />
                             </div>

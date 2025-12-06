@@ -74,7 +74,7 @@ const AppTextArea = ({
                     rows={rows}
                     minLength={minLength}
                     maxLength={maxLength}
-                    className={`w-full px-3 py-2 ${value && onClear ? 'pr-8' : ''} border rounded-md bg-background text-sm focus:outline-none transition-colors resize-none min-h-[80px] ${error
+                    className={`w-full px-3 py-2 ${value && onClear ? 'pr-8' : ''} border rounded-md bg-background text-sm focus:outline-none transition-colors resize-none min-h-[80px] max-h-[200px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${error
                         ? 'border-destructive focus:border-destructive placeholder:text-destructive/60'
                         : `border-input focus:border-${accentColor} placeholder:text-${accentColor}/60`
                         }`}

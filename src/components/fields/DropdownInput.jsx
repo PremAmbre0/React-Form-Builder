@@ -85,9 +85,8 @@ export default function DropdownInput({ field, value, onChange, onBlur, error, a
                         onClick={() => setIsOpen(!isOpen)}
                         className={`w-full px-3 py-2 border rounded-md bg-background text-sm flex items-center justify-between focus:outline-none transition-colors ${error
                             ? 'border-destructive focus:border-destructive'
-                            : `border-input focus:border-${accentColor}`
+                            : `border-input focus:border-${accentColor} ${isOpen ? `border-${accentColor}` : ''}`
                             }`}
-                        style={isOpen ? { borderColor: `var(--${accentColor})` } : {}}
                     >
                         <div className="flex items-center gap-2 overflow-hidden">
                             <span className={`truncate ${selectedValues.length ? 'text-foreground' : `text-${accentColor}/60`}`}>
@@ -147,7 +146,6 @@ export default function DropdownInput({ field, value, onChange, onBlur, error, a
                         placeholder="Please specify..."
                         className={`w-full px-3 py-2 border rounded-md bg-background text-sm focus:outline-none transition-colors ${`border-input focus:border-${accentColor} placeholder:text-${accentColor}/60`
                             }`}
-                        style={{ borderColor: `var(--${accentColor})` }}
                     />
                 </div>
             )}

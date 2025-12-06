@@ -43,7 +43,7 @@ const AppToggle = ({
                     <span
                         className={`
                             absolute left-0 top-1/2 -translate-y-1/2 w-full rounded-full transition-colors
-                            ${toggleStyle === 'offset' ? 'h-3.5 w-[calc(100%-8px)] left-1/2 -translate-x-1/2' : 'h-full'}
+                            ${toggleStyle === 'offset' ? 'h-3.5 w-[calc(100%-12px)] left-1/2 -translate-x-1/2' : 'h-full'}
                             ${value ? (!accentColorHex ? `bg-${accentColor}` : '') : 'bg-input'}
                         `}
                         style={{

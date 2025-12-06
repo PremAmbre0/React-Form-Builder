@@ -184,7 +184,7 @@ const AppCheckboxGroup = ({
                                 onChange={handleOtherInputChange}
                                 placeholder="Please specify..."
                                 disabled={disabled}
-                                className={`w-full px-3 py-1.5 ml-6 text-sm border rounded-md focus:outline-none focus:border-${accentColor} placeholder:text-${accentColor}/60 transition-colors`}
+                                className={`w-[calc(100%-1.5rem)] px-3 py-1.5 ml-6 text-sm border rounded-md focus:outline-none transition-colors border-input focus:border-${accentColor} placeholder:text-${accentColor}/60`}
                             />
                         )}
                     </div>
