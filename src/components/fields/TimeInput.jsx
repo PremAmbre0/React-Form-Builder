@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Clock, X } from 'lucide-react';
 import AppTimePicker from '../ui/AppTimePicker';
-import '../../assets/styles/CustomDatePicker.css';
 
 export default function TimeInput({ field, value, onChange, error, accentColor, hideLabel }) {
     const { config, validation } = field;
